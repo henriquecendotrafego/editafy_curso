@@ -1,7 +1,8 @@
+
 import { supabase } from './config';
 
 export const authAPI = {
-  signUp: async (email: string, password: string, userType: 'student' | 'seller') => {
+  signUp: async (email: string, password: string, userType: 'student' | 'seller' | 'admin' | 'affiliate') => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -19,6 +20,17 @@ export const authAPI = {
       email,
       password,
     });
+    
+    if (data?.user) {
+      const { data: roleData } = await supabase
+        .from('user_roles')
+        .select('role_id, roles(name)')
+        .eq('user_id', data.user.id)
+        .single();
+      
+      return { data: { ...data, role: roleData?.roles?.name }, error };
+    }
+    
     return { data, error };
   },
 
@@ -31,4 +43,18 @@ export const authAPI = {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
     return { data, error };
   },
+
+  getCurrentUser: async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: roleData } = await supabase
+        .from('user_roles')
+        .select('role_id, roles(name)')
+        .eq('user_id', user.id)
+        .single();
+      
+      return { ...user, role: roleData?.roles?.name };
+    }
+    return null;
+  }
 };

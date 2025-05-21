@@ -98,28 +98,66 @@ function App() {
         {/* Main Content */}
         <div className="flex-grow">
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/cases" element={<SuccessCases />} />
             <Route path="/vitrine" element={<Vitrine />} />
             <Route path="/checkout/:courseId" element={<Checkout />} />
-            <Route path="/admin/*" element={<AdminDashboard />} />
-            <Route
-              path="/seller/*"
-              element={
+            
+            {/* Protected Admin Routes */}
+            <Route path="/admin/*" element={
+              <ProtectedRoute role="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
+            
+            {/* Protected Seller (Producer) Routes */}
+            <Route path="/seller/*" element={
+              <ProtectedRoute role="producer">
                 <DashboardLayout userType="seller">
                   <Routes>
                     <Route index element={<SellerDashboard />} />
                     <Route path="live" element={<LiveStream />} />
                     <Route path="create-product" element={<CreateProduct />} />
                     <Route path="sales-page" element={<SalesPage />} />
+                    <Route path="co-producers" element={<CoProducerManagement />} />
+                    <Route path="reports" element={<SellerReports />} />
                   </Routes>
                 </DashboardLayout>
-              }
-            />
-            <Route
-              path="/student/*"
-              element={
+              </ProtectedRoute>
+            } />
+            
+            {/* Protected Co-producer Routes */}
+            <Route path="/co-producer/*" element={
+              <ProtectedRoute role="co_producer">
+                <DashboardLayout userType="co-producer">
+                  <Routes>
+                    <Route index element={<CoProducerDashboard />} />
+                    <Route path="courses" element={<CoProducerCourses />} />
+                    <Route path="reports" element={<CoProducerReports />} />
+                  </Routes>
+                </DashboardLayout>
+              </ProtectedRoute>
+            } />
+            
+            {/* Protected Affiliate Routes */}
+            <Route path="/affiliate/*" element={
+              <ProtectedRoute role="affiliate">
+                <DashboardLayout userType="affiliate">
+                  <Routes>
+                    <Route index element={<AffiliateDashboard />} />
+                    <Route path="courses" element={<AvailableCourses />} />
+                    <Route path="links" element={<AffiliateLinks />} />
+                    <Route path="reports" element={<AffiliateReports />} />
+                  </Routes>
+                </DashboardLayout>
+              </ProtectedRoute>
+            } />
+
+            {/* Protected Student Routes */}
+            <Route path="/student/*" element={
+              <ProtectedRoute role="student">
                 <DashboardLayout userType="student">
                   <Routes>
                     <Route index element={<StudentDashboard />} />
@@ -128,6 +166,9 @@ function App() {
                     <Route path="community" element={<Community />} />
                     <Route path="settings" element={<Settings />} />
                   </Routes>
+                </DashboardLayout>
+              </ProtectedRoute>
+            } />s>
                 </DashboardLayout>
               }
             />
