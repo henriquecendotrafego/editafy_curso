@@ -1,0 +1,152 @@
+. Visão Geral dos Dashboards
+Os dashboards serão aprovados como componentes React, acessíveis via rotas protegidas, com exigências baseadas no papel do usuário ( produtor , coprodutor , afiliado , administrador ). Eles se integram através de uma API RESTful (Node.js/Express) que gerencia dados compartilhados em um banco MySQL. Abaixo, detalhes como funcionalidades, menus, páginas, e integração.
+
+Funcionalidades do Dashboard
+Produtor :
+Upload de Produtos : Criar/editar cursos, módulos, e aulas (título, descrição, preço, arquivos de vídeo/PDF).
+Gestão de Coprodutores : Associar coprodutores a cursos e definir porcentagens (ex.: 30%).
+Relatórios : Visualizar vendas, comissões pagas a co-produtores/afiliados, e gráficos de desempenho.
+Cardápio : Meus Cursos, Novo Curso, Coprodutores, Relatórios, Perfil.
+Coprodutor :
+Acesso a Cursos Associados : Visualizar/editar cursos onde é co-produtor.
+Relatórios : Ver ganhos (30% por venda) e gráficos de vendas.
+Menu : Meus Cursos, Relatórios, Perfil.
+Afiliado :
+Afiliação : Selecionar cursos para promover e gerar links de afiliados.
+Relatórios : Ver comissões (20% por venda), cliques nos links, e gráficos de conversão.
+Menu : Cursos Disponíveis, Meus Links, Relatórios, Perfil.
+Administrador :
+Acesso Total : Gerenciar todos os usuários, cursos, transações e splits.
+Aprovação : Aprovar/rejeitar cursos e afiliações.
+Relatórios : Visualizar dados globais (vendas, usuários, comissões) com gráficos.
+Menu : Usuários, Cursos, Transações, Relatórios, Configurações.
+Integração de Informações
+Upload de Produtos : Produtor cria curso → coprodutor acessar/editar se associado → afiliado solicitação de afiliação → admin aprova.
+Afiliação : Afiliado gera link → venda via link registra transação → divide dividem pagamento (produtor, coprodutor, afiliado) → dashboards refletem ganhos.
+Relatórios : Dados de vendas (MySQL) alimentam gráficos em todos os dashboards, com filtros por curso/data.
+Notificações : E-mails (simulados via nodemailer ) para aprovações, vendas, e comissões.
+2. Tecnologias, Frameworks e Linguagens
+Front-end :
+Linguagem : JavaScript (ES6+).
+Estrutura : React (v18.x).
+Bibliotecas :
+axios : Requisições HTTP.
+react-router-dom : Navegação.
+recharts : Gráficos (vendas, comissões).
+tailwindcss : Estilização via CDN [].
+Ferramentas : Vite [].
+Back-end :
+Linguagem : JavaScript (Node.js v18.x).
+Estrutura : Express.
+Bibliotecas :
+jsonwebtoken : Autenticação JWT.
+bcrypt : Hash de senhas.
+sequelize : ORM para MySQL.
+axios : API do C6 Bank.
+nodemailer : E-mails (simulados).
+Banco de Dados :
+Tecnologia : MySQL (local) [].
+Tabelas :
+usuários : id, e-mail, senha, função, c6_account_id.
+cursos : id, título, descrição, preço, producer_id, co_productor_id.
+módulos , aulas : Estrutura de cursos.
+transações : id, user_id, course_id, amount, affiliate_id.
+divisões : id, transaction_id, recipient_id, porcentagem, valor.
+afiliações : id, affiliate_id, course_id, status (pendente/aprovado).
+3. Estrutura de Programação
+Dois repositórios: front-end ( editaf-frontend ) e back-end ( editaf-backend ).
+
+Repositório 1: Front-end (React)
+Repositório : editaf-frontend (GitHub).
+Estrutura de Diretórios :
+texto
+
+Cópia
+editafy-frontend/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── assets/
+│   │   ├── images/
+│   │   └── videos/
+│   ├── components/
+│   │   ├── Login.js
+│   │   ├── Register.js
+│   │   ├── Navbar.js
+│   │   ├── CourseForm.js
+│   │   ├── CourseList.js
+│   │   ├── CheckoutForm.js
+│   │   ├── ProducerDashboard.js
+│   │   ├── CoProducerDashboard.js
+│   │   ├── AffiliateDashboard.js
+│   │   ├── AdminDashboard.js
+│   │   └── Chart.js
+│   ├── pages/
+│   │   ├── Home.js
+│   │   ├── Dashboard.js
+│   │   ├── Course.js
+│   │   └── Checkout.js
+│   ├── App.js
+│   ├── index.js
+│   └── styles/
+│       └── tailwind.css
+├── package.json
+├── vite.config.js
+└── README.md
+Módulos :
+Login.js , Register.js : Autenticação e cadastro.
+Navbar.js : Menu dinâmico por função.
+CourseForm.js : Formulário para criar/editar cursos.
+CourseList.js : Lista de cursos (filtrada por função).
+CheckoutForm.js : Pagamento via C6 Bank.
+ProducerDashboard.js : Gestão de cursos, co-produtores, relatórios.
+CoProducerDashboard.js : Cursos associados, relatórios.
+AffiliateDashboard.js : Afiliação, links, relatórios.
+AdminDashboard.js : Controle total (usuários, cursos, transações).
+Chart.js : Gráficos de vendas/comissões.
+Repositório 2: Back-end (Node.js/Express)
+Repositório : editaf-backend (GitHub).
+Estrutura de Diretórios :
+texto
+
+Cópia
+editafy-backend/
+├── config/
+│   ├── database.js
+│   └── c6bank.js
+├── models/
+│   ├── User.js
+│   ├── Course.js
+│   ├── Module.js
+│   ├── Lesson.js
+│   ├── Transaction.js
+│   ├── Split.js
+│   └── Affiliation.js
+├── routes/
+│   ├── auth.js
+│   ├── courses.js
+│   ├── checkout.js
+│   ├── content.js
+│   ├── affiliate.js
+│   ├── admin.js
+├── controllers/
+│   ├── AuthController.js
+│   ├── CourseController.js
+│   ├── CheckoutController.js
+│   ├── ContentController.js
+│   ├── AffiliateController.js
+│   ├── AdminController.js
+├── middleware/
+│   └── auth.js
+├── server.js
+├── package.json
+└── README.md
+Módulos :
+auth.js : /api/login , /api/register .
+courses.js : /api/cursos , /api/cursos/:id .
+checkout.js : /api/checkout (pagamentos e divisões).
+content.js : /api/content/:id (URLs de conteúdo).
+affiliate.js : /api/affiliate/links , /api/affiliate/earnings , /api/affiliate/apply .
+admin.js : /api/admin/usuários , /api/admin/cursos , /api/admin/aprovar .
+auth.js (middleware) : Verifica JWT e função.
