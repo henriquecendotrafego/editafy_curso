@@ -18,7 +18,6 @@ import Checkout from './pages/Checkout';
 import LoginModal from './components/LoginModal';
 import Footer from './components/Footer';
 import AdminDashboard from './pages/admin/AdminDashboard';
-import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -106,31 +105,55 @@ function App() {
             <Route path="/vitrine" element={<Vitrine />} />
             <Route path="/checkout/:courseId" element={<Checkout />} />
             
-            {/* Protected Admin Routes */}
+            {/* Admin Routes */}
             <Route path="/admin/*" element={<AdminDashboard />} />
             
-            {/* Protected Seller (Producer) Routes */}
-            <Route path="/seller/*" element={
+            {/* Seller Routes */}
+            <Route path="/seller" element={
               <DashboardLayout userType="seller">
-                <Routes>
-                  <Route index element={<SellerDashboard />} />
-                  <Route path="live" element={<LiveStream />} />
-                  <Route path="create-product" element={<CreateProduct />} />
-                  <Route path="sales-page" element={<SalesPage />} />
-                </Routes>
+                <SellerDashboard />
+              </DashboardLayout>
+            } />
+            <Route path="/seller/live" element={
+              <DashboardLayout userType="seller">
+                <LiveStream />
+              </DashboardLayout>
+            } />
+            <Route path="/seller/create-product" element={
+              <DashboardLayout userType="seller">
+                <CreateProduct />
+              </DashboardLayout>
+            } />
+            <Route path="/seller/sales-page" element={
+              <DashboardLayout userType="seller">
+                <SalesPage />
               </DashboardLayout>
             } />
 
-            {/* Protected Student Routes */}
-            <Route path="/student/*" element={
+            {/* Student Routes */}
+            <Route path="/student" element={
               <DashboardLayout userType="student">
-                <Routes>
-                  <Route index element={<StudentDashboard />} />
-                  <Route path="courses" element={<Courses />} />
-                  <Route path="progress" element={<Progress />} />
-                  <Route path="community" element={<Community />} />
-                  <Route path="settings" element={<Settings />} />
-                </Routes>
+                <StudentDashboard />
+              </DashboardLayout>
+            } />
+            <Route path="/student/courses" element={
+              <DashboardLayout userType="student">
+                <Courses />
+              </DashboardLayout>
+            } />
+            <Route path="/student/progress" element={
+              <DashboardLayout userType="student">
+                <Progress />
+              </DashboardLayout>
+            } />
+            <Route path="/student/community" element={
+              <DashboardLayout userType="student">
+                <Community />
+              </DashboardLayout>
+            } />
+            <Route path="/student/settings" element={
+              <DashboardLayout userType="student">
+                <Settings />
               </DashboardLayout>
             } />
           </Routes>
