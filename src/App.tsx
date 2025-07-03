@@ -18,6 +18,7 @@ import Checkout from './pages/Checkout';
 import LoginModal from './components/LoginModal';
 import Footer from './components/Footer';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -121,35 +122,6 @@ function App() {
                     <Route path="live" element={<LiveStream />} />
                     <Route path="create-product" element={<CreateProduct />} />
                     <Route path="sales-page" element={<SalesPage />} />
-                    <Route path="co-producers" element={<CoProducerManagement />} />
-                    <Route path="reports" element={<SellerReports />} />
-                  </Routes>
-                </DashboardLayout>
-              </ProtectedRoute>
-            } />
-            
-            {/* Protected Co-producer Routes */}
-            <Route path="/co-producer/*" element={
-              <ProtectedRoute role="co_producer">
-                <DashboardLayout userType="co-producer">
-                  <Routes>
-                    <Route index element={<CoProducerDashboard />} />
-                    <Route path="courses" element={<CoProducerCourses />} />
-                    <Route path="reports" element={<CoProducerReports />} />
-                  </Routes>
-                </DashboardLayout>
-              </ProtectedRoute>
-            } />
-            
-            {/* Protected Affiliate Routes */}
-            <Route path="/affiliate/*" element={
-              <ProtectedRoute role="affiliate">
-                <DashboardLayout userType="affiliate">
-                  <Routes>
-                    <Route index element={<AffiliateDashboard />} />
-                    <Route path="courses" element={<AvailableCourses />} />
-                    <Route path="links" element={<AffiliateLinks />} />
-                    <Route path="reports" element={<AffiliateReports />} />
                   </Routes>
                 </DashboardLayout>
               </ProtectedRoute>
@@ -168,10 +140,7 @@ function App() {
                   </Routes>
                 </DashboardLayout>
               </ProtectedRoute>
-            } />s>
-                </DashboardLayout>
-              }
-            />
+            } />
           </Routes>
         </div>
 
