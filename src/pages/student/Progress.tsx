@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Clock, Target, TrendingUp } from 'lucide-react';
+import { Award, Clock, Target, TrendingUp, BookOpen } from 'lucide-react';
 import Chart from 'react-apexcharts';
 
 export default function Progress() {

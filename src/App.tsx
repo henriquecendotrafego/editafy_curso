@@ -18,6 +18,7 @@ import Checkout from './pages/Checkout';
 import LoginModal from './components/LoginModal';
 import Footer from './components/Footer';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import { BookOpen } from 'lucide-react';
 
 function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -32,11 +33,8 @@ function App() {
             <div className="flex justify-between h-16">
               <div className="flex">
                 <Link to="/" className="flex items-center">
-                  <img
-                    src="/src/img/Design_sem_nome-removebg-preview.png"
-                    alt="EditaFY"
-                    className="h-8"
-                  />
+                  <BookOpen className="h-8 w-8 text-[#2B580C]" />
+                  <span className="ml-2 text-xl font-bold text-[#2B580C]">EditaFY</span>
                 </Link>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   <Link

@@ -55,11 +55,8 @@ export default function DashboardLayout({ children, userType }: DashboardLayoutP
         <div className="p-4 flex justify-between items-center">
           {!isCollapsed && (
             <Link to="/" className="flex items-center">
-              <img
-                src="/src/img/Design_sem_nome-removebg-preview.png"
-                alt="EditaFY"
-                className="h-8"
-              />
+              <BookOpen className="h-8 w-8 text-[#2B580C]" />
+              <span className="ml-2 text-xl font-bold text-[#2B580C]">EditaFY</span>
             </Link>
           )}
           <button
