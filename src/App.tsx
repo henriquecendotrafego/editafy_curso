@@ -107,39 +107,31 @@ function App() {
             <Route path="/checkout/:courseId" element={<Checkout />} />
             
             {/* Protected Admin Routes */}
-            <Route path="/admin/*" element={
-              <ProtectedRoute role="admin">
-                <AdminDashboard />
-              </ProtectedRoute>
-            } />
+            <Route path="/admin/*" element={<AdminDashboard />} />
             
             {/* Protected Seller (Producer) Routes */}
             <Route path="/seller/*" element={
-              <ProtectedRoute role="producer">
-                <DashboardLayout userType="seller">
-                  <Routes>
-                    <Route index element={<SellerDashboard />} />
-                    <Route path="live" element={<LiveStream />} />
-                    <Route path="create-product" element={<CreateProduct />} />
-                    <Route path="sales-page" element={<SalesPage />} />
-                  </Routes>
-                </DashboardLayout>
-              </ProtectedRoute>
+              <DashboardLayout userType="seller">
+                <Routes>
+                  <Route index element={<SellerDashboard />} />
+                  <Route path="live" element={<LiveStream />} />
+                  <Route path="create-product" element={<CreateProduct />} />
+                  <Route path="sales-page" element={<SalesPage />} />
+                </Routes>
+              </DashboardLayout>
             } />
 
             {/* Protected Student Routes */}
             <Route path="/student/*" element={
-              <ProtectedRoute role="student">
-                <DashboardLayout userType="student">
-                  <Routes>
-                    <Route index element={<StudentDashboard />} />
-                    <Route path="courses" element={<Courses />} />
-                    <Route path="progress" element={<Progress />} />
-                    <Route path="community" element={<Community />} />
-                    <Route path="settings" element={<Settings />} />
-                  </Routes>
-                </DashboardLayout>
-              </ProtectedRoute>
+              <DashboardLayout userType="student">
+                <Routes>
+                  <Route index element={<StudentDashboard />} />
+                  <Route path="courses" element={<Courses />} />
+                  <Route path="progress" element={<Progress />} />
+                  <Route path="community" element={<Community />} />
+                  <Route path="settings" element={<Settings />} />
+                </Routes>
+              </DashboardLayout>
             } />
           </Routes>
         </div>
